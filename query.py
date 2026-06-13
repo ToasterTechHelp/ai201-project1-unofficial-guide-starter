@@ -21,7 +21,10 @@ load_dotenv()
 MODEL = "llama-3.3-70b-versatile"
 # Cosine-distance cutoff: chunks farther than this are treated as irrelevant
 # and dropped, so an off-domain question ends up with no context -> refusal.
-MAX_DISTANCE = 0.9
+# Set to 0.80 from observed data: in-domain queries score <= 0.57, while a
+# clearly off-domain query ("best pizza place") scores >= 0.85 — 0.80 sits in
+# that gap, so off-domain questions get an empty context and short-circuit.
+MAX_DISTANCE = 0.80
 
 SYSTEM_PROMPT = (
     "You are a tax-document assistant. Answer the user's question using ONLY the "
